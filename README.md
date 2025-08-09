@@ -20,6 +20,6 @@ A beginner-friendly Pomodoro timer built with HTML, CSS, and JavaScript, perfect
 - Add presets for different focus/break times.
 
 ## How to Run Tests
-- Open `tests/test.html` in your browser.
-- All tests should pass; the results appear on the page.
-- Refresh the page to run the tests again.
+- Open `tests/test.html` in your browser. The Mocha suite runs automatically.
+- All tests should be green within a couple seconds.
+- Refresh the page to run the tests again, or point a headless browser at the file for automated checks.
