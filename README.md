@@ -1,5 +1,10 @@
 # hello-codex-pomodoro
-A beginner-friendly one-file Pomodoro timer built with HTML, CSS, and JavaScript, perfect for learning and experimenting with OpenAI Codex.
+A beginner-friendly Pomodoro timer built with HTML, CSS, and JavaScript, perfect for learning and experimenting with OpenAI Codex.
+
+## Features
+- Separate `styles.css` and `script.js` files for clarity.
+- Toggle between dark and light themes.
+- Short beep sound when switching between Focus and Break phases.
 
 ## How to Run
 - Download the repo or clone it.
@@ -11,7 +16,4 @@ A beginner-friendly one-file Pomodoro timer built with HTML, CSS, and JavaScript
 - Help beginners learn by reading and running the code.
 
 ## Ideas for Codex Tasks
-- Move inline CSS and JS into separate `styles.css` and `script.js` files.
-- Add dark/light mode toggle.
-- Add a short "ding" sound when switching phases.
 - Add presets for different focus/break times.
