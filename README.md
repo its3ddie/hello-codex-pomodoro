@@ -1,4 +1,7 @@
 # hello-codex-pomodoro
+
+[Live Demo](https://its3ddie.github.io/hello-codex-pomodoro/) · [Test Suite](https://its3ddie.github.io/hello-codex-pomodoro/tests/test.html)
+
 A beginner-friendly Pomodoro timer built with HTML, CSS, and JavaScript, perfect for learning and experimenting with OpenAI Codex.
 
 ## Features
