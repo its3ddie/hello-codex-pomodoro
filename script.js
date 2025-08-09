@@ -41,6 +41,9 @@ function nextPhase() {
 // Start the timer
 function start() {
   if (state.ticking) return;
+  // Respect current input value when starting from idle
+  const mins = state.mode === 'focus' ? +focusEl.value : +breakEl.value;
+  state.remaining = mins * 60 * 1000;
   state.ticking = true;
   state.endAt = performance.now() + state.remaining;
   startBtn.disabled = true;
@@ -88,6 +91,23 @@ startBtn.onclick = start;
 pauseBtn.onclick = pause;
 resetBtn.onclick = reset;
 themeBtn.onclick = toggleTheme;
+
+// Update display when user edits minutes while timer is idle
+focusEl.oninput = () => {
+  if (!state.ticking && state.mode === 'focus') {
+    state.remaining = (+focusEl.value) * 60 * 1000;
+    state.rafId && cancelAnimationFrame(state.rafId);
+    update();
+  }
+};
+
+breakEl.oninput = () => {
+  if (!state.ticking && state.mode === 'break') {
+    state.remaining = (+breakEl.value) * 60 * 1000;
+    state.rafId && cancelAnimationFrame(state.rafId);
+    update();
+  }
+};
 
 // Initialize timer
 reset();
