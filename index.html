@@ -4,43 +4,14 @@
   <meta charset="utf-8" />
   <title>Simple Pomodoro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      margin: 0; min-height: 100vh; display: grid; place-items: center;
-      background: #0f172a; color: #e2e8f0;
-    }
-    .card {
-      width: 100%; max-width: 420px; padding: 24px; border-radius: 16px;
-      background: #111827; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-      border: 1px solid #1f2937;
-    }
-    h1 { margin: 0 0 8px; font-size: 22px; font-weight: 700; }
-    .timer {
-      font-variant-numeric: tabular-nums;
-      font-size: 64px; font-weight: 800; letter-spacing: 2px; text-align: center;
-      margin: 16px 0 8px;
-    }
-    .mode { text-align: center; opacity: 0.85; margin-bottom: 16px; }
-    .row { display: flex; gap: 12px; margin: 10px 0; }
-    .row > label { flex: 1; display: grid; gap: 6px; font-size: 14px; }
-    input[type="number"] {
-      width: 100%; padding: 10px 12px; background: #0b1220; color: #e5e7eb;
-      border: 1px solid #334155; border-radius: 10px;
-    }
-    .buttons { display: flex; gap: 10px; margin-top: 14px; }
-    button {
-      flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #334155;
-      background: #0b1220; color: #e5e7eb; font-weight: 600; cursor: pointer;
-    }
-    button.primary { background: #2563eb; border-color: #1d4ed8; color: white; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .hint { margin-top: 12px; font-size: 12px; opacity: 0.75; text-align: center; }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="card" aria-live="polite">
+    <!-- Dark/Light theme toggle -->
+    <div class="theme-toggle">
+      <button id="theme">Light Mode</button>
+    </div>
     <h1>Pomodoro Timer</h1>
     <div class="timer" id="display" aria-label="time remaining">25:00</div>
     <div class="mode" id="mode">Focus</div>
@@ -63,82 +34,6 @@
     <p class="hint">Tip: adjust minutes, then press Start. It auto-switches Focus ⇄ Break.</p>
   </main>
 
-  <script>
-    const display = document.getElementById('display');
-    const modeEl  = document.getElementById('mode');
-    const focusEl = document.getElementById('focus');
-    const breakEl = document.getElementById('break');
-    const startBtn= document.getElementById('start');
-    const pauseBtn= document.getElementById('pause');
-    const resetBtn= document.getElementById('reset');
-
-    let state = { mode: 'focus', endAt: null, remaining: 25*60*1000, ticking: false, rafId: null };
-
-    function msLeft() {
-      return Math.max(0, state.endAt - performance.now());
-    }
-    function fmt(ms) {
-      const s = Math.ceil(ms / 1000);
-      const m = Math.floor(s / 60);
-      const ss = String(s % 60).padStart(2, '0');
-      return `${m}:${ss}`;
-    }
-    function update() {
-      const left = state.ticking ? msLeft() : state.remaining;
-      display.textContent = fmt(left);
-      if (state.ticking && left <= 0) nextPhase();
-      else state.rafId = requestAnimationFrame(update);
-    }
-    function nextPhase() {
-      beep();
-      state.mode = state.mode === 'focus' ? 'break' : 'focus';
-      modeEl.textContent = state.mode === 'focus' ? 'Focus' : 'Break';
-      const mins = state.mode === 'focus' ? +focusEl.value : +breakEl.value;
-      state.remaining = mins * 60 * 1000;
-      start(); // auto-start the next phase
-    }
-    function start() {
-      if (state.ticking) return;
-      state.ticking = true;
-      state.endAt = performance.now() + state.remaining;
-      startBtn.disabled = true;
-      pauseBtn.disabled = false;
-      state.rafId && cancelAnimationFrame(state.rafId);
-      update();
-    }
-    function pause() {
-      if (!state.ticking) return;
-      state.ticking = false;
-      state.remaining = msLeft();
-      startBtn.disabled = false;
-      pauseBtn.disabled = true;
-    }
-    function reset() {
-      state.ticking = false;
-      state.mode = 'focus';
-      modeEl.textContent = 'Focus';
-      state.remaining = (+focusEl.value) * 60 * 1000;
-      startBtn.disabled = false;
-      pauseBtn.disabled = true;
-      state.rafId && cancelAnimationFrame(state.rafId);
-      update();
-    }
-    function beep() {
-      // tiny WebAudio chirp
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const o = ctx.createOscillator(); const g = ctx.createGain();
-      o.connect(g); g.connect(ctx.destination);
-      o.type = 'sine'; o.frequency.value = 880; g.gain.value = 0.001;
-      o.start(); g.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.25);
-      o.stop(ctx.currentTime + 0.26);
-    }
-    // wire buttons
-    startBtn.onclick = start;
-    pauseBtn.onclick = pause;
-    resetBtn.onclick = reset;
-    // initialize
-    reset();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
