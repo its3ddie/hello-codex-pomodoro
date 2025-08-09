@@ -5,6 +5,7 @@ A beginner-friendly Pomodoro timer built with HTML, CSS, and JavaScript, perfect
 - Separate `styles.css` and `script.js` files for clarity.
 - Toggle between dark and light themes.
 - Short beep sound when switching between Focus and Break phases.
+- Editing Focus/Break minutes while idle updates the countdown immediately.
 
 ## How to Run
 - Download the repo or clone it.
