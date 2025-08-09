@@ -17,3 +17,8 @@ A beginner-friendly Pomodoro timer built with HTML, CSS, and JavaScript, perfect
 
 ## Ideas for Codex Tasks
 - Add presets for different focus/break times.
+
+## How to Run Tests
+- Open `tests/test.html` in your browser.
+- All tests should pass; the results appear on the page.
+- Refresh the page to run the tests again.
