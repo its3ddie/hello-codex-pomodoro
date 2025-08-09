@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pomodoro Tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="card" aria-live="polite">
+    <div class="theme-toggle">
+      <button id="theme">Light Mode</button>
+    </div>
+    <h1>Pomodoro Timer</h1>
+    <div class="timer" id="display" aria-label="time remaining">25:00</div>
+    <div class="mode" id="mode">Focus</div>
+
+    <div class="row">
+      <label>Focus (min)
+        <input id="focus" type="number" min="1" max="120" value="25" />
+      </label>
+      <label>Break (min)
+        <input id="break" type="number" min="1" max="60" value="5" />
+      </label>
+    </div>
+
+    <div class="buttons">
+      <button id="start" class="primary">Start</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+    </div>
+
+    <p class="hint">Tip: adjust minutes, then press Start. It auto-switches Focus ⇄ Break.</p>
+  </main>
+
+  <div id="mocha"></div>
+  <script src="https://unpkg.com/mocha/mocha.js"></script>
+  <script src="https://unpkg.com/chai/chai.js"></script>
+  <script>
+    mocha.setup('bdd');
+    const expect = chai.expect;
+  </script>
+  <script src="../script.js"></script>
+  <script src="test.js"></script>
+  <script>mocha.run();</script>
+</body>
+</html>
